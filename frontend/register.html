@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | HealthLink AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="patient-body">
+    <div class="container fade-in">
+        <button class="back-link" onclick="window.location.href='index.html'">← Back to Login</button>
+
+        <div class="login-box" style="max-width: 600px;">
+            <h2 style="margin-bottom: 20px; text-align: center;">Patient Registration</h2>
+
+            <form id="registration-form">
+                <div class="dashboard-header-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="reg-name" placeholder="John Doe" required>
+                    </div>
+                    <div class="input-group">
+                        <label>User ID (Min 7 chars, Alpha + Num)</label>
+                        <input type="text" id="reg-id" placeholder="e.g. user123" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Age (Max 99)</label>
+                        <input type="number" id="reg-age" placeholder="25" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Gender (Male/Female)</label>
+                        <input type="text" id="reg-gender" placeholder="Male or Female" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Blood Group (e.g., O+ or A-)</label>
+                        <input type="text" id="reg-blood" placeholder="O+" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Emergency Contact (10 Digits)</label>
+                        <input type="number" id="reg-emergency" placeholder="9988776655" required>
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-top: 20px;">
+                    <label>Create Password</label>
+                    <input type="password" id="reg-pass" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-submit" style="margin-top: 25px; width: 100%;">Complete
+                    Registration</button>
+            </form>
+
+            <p id="register-link" style="margin-top: 20px; text-align: center;">
+                Already have an account? <a href="index.html"
+                    style="color: var(--warning-amber); text-decoration: none; font-weight: bold;">Login here</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = "http://localhost:8000";
+
+        document.getElementById('registration-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // 1. Capture Values
+            const userID = document.getElementById('reg-id').value.trim();
+            const age = parseInt(document.getElementById('reg-age').value);
+            const gender = document.getElementById('reg-gender').value.toLowerCase().trim();
+            const bloodGroup = document.getElementById('reg-blood').value.toUpperCase().trim();
+            const contact = document.getElementById('reg-emergency').value.trim();
+            const password = document.getElementById('reg-pass').value;
+            const fullName = document.getElementById('reg-name').value;
+
+            // 2. VALIDATION LOGIC
+
+            // ID Validation: Min 7 chars, must contain letters AND numbers
+            const idRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{7,}$/;
+            if (!idRegex.test(userID)) {
+                alert("User ID must be at least 7 characters long and contain both letters and numbers.");
+                return;
+            }
+
+            // Age Validation: Must be less than 100
+            if (isNaN(age) || age >= 100 || age <= 0) {
+                alert("Please enter a valid age between 1 and 99.");
+                return;
+            }
+
+            // Gender Validation: Only Male or Female
+            if (gender !== "male" && gender !== "female") {
+                alert("Gender must be 'Male' or 'Female'.");
+                return;
+            }
+
+            // Blood Group Validation: Alphabets followed by + or - (e.g., O+, AB-)
+            const bloodRegex = /^[A-Z][12]?[A-Z]?[+-]$/;
+            if (!bloodRegex.test(bloodGroup)) {
+                alert("Please enter a valid blood group (e.g., A+, O-, AB+).");
+                return;
+            }
+
+            // Contact Validation: Exactly 10 digits
+            if (contact.length !== 10) {
+                alert("Emergency Contact must be exactly 10 digits.");
+                return;
+            }
+
+            // 3. Send to Backend
+            fetch(`${API_BASE_URL}/auth/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    user_id: userID,
+                    password: password,
+                    role: "patient",
+                    name: fullName,
+                    age: age,
+                    gender: gender,
+                    blood_group: bloodGroup,
+                    contact: contact
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(err.detail || "Registration failed");
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Registration Successful! Redirecting to login...');
+                    window.location.href = 'index.html';
+                })
+                .catch(error => {
+                    alert("Registration error: " + error.message);
+                    console.error(error);
+                });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Registration | HealthLink AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="patient-body">
+    <div class="container fade-in">
+        <button class="back-link" onclick="window.location.href='index.html'">← Back to Login</button>
+
+        <div class="login-box" style="max-width: 600px;">
+            <h2 style="margin-bottom: 20px; text-align: center;">Doctor Registration</h2>
+
+            <form id="doctor-registration-form">
+                <div class="dashboard-header-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="doc-name" placeholder="Dr. Arjun Kumar" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Medical License ID (Min 7 chars)</label>
+                        <input type="text" id="doc-id" placeholder="LIC1234567" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Specialization</label>
+                        <input type="text" id="doc-special" placeholder="e.g. Cardiologist" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Experience (Years)</label>
+                        <input type="number" id="doc-exp" placeholder="10" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Hospital/Clinic Name</label>
+                        <input type="text" id="doc-hospital" placeholder="City Hospital" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Contact Number (10 Digits)</label>
+                        <input type="number" id="doc-contact" placeholder="9876543210" required>
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-top: 20px;">
+                    <label>Create Secure Password</label>
+                    <input type="password" id="doc-pass" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-submit" style="margin-top: 25px; width: 100%;">Complete Doctor
+                    Registration</button>
+            </form>
+
+            <p id="register-link" style="margin-top: 20px; text-align: center;">
+                Already registered? <a href="index.html"
+                    style="color: var(--warning-amber); text-decoration: none; font-weight: bold;">Login here</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = "http://localhost:8000";
+
+        document.getElementById('doctor-registration-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const docID = document.getElementById('doc-id').value.trim();
+            const password = document.getElementById('doc-pass').value;
+            const contact = document.getElementById('doc-contact').value;
+            const docName = document.getElementById('doc-name').value;
+
+            // Validation: License ID (similar to Patient ID rules)
+            const idRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{7,}$/;
+            if (!idRegex.test(docID)) {
+                alert("License ID must be at least 7 characters and contain both letters and numbers.");
+                return;
+            }
+
+            // Validation: Contact 10 digits
+            if (contact.length !== 10) {
+                alert("Contact number must be exactly 10 digits.");
+                return;
+            }
+
+            // Send to Backend
+            fetch(`${API_BASE_URL}/auth/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    user_id: docID,
+                    password: password,
+                    role: "doctor",
+                    name: docName
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(err.detail || "Registration failed");
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Doctor Registration Successful!');
+                    window.location.href = 'index.html';
+                })
+                .catch(error => {
+                    alert("Registration error: " + error.message);
+                    console.error(error);
+                });
+        });
+    </script>
+</body>
+
+</html>

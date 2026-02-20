@@ -1,0 +1,405 @@
+/* Dashboard Layout */
+.dashboard-body {
+    display: flex;
+    background-color: var(--bg-deep);
+    align-items: flex-start;
+}
+
+.sidebar {
+    width: 240px;
+    background: var(--bg-surface);
+    height: 100vh;
+    padding: 30px 20px;
+    border-right: 1px solid var(--border-subtle);
+    position: sticky;
+    top: 0;
+}
+
+.logo { color: var(--text-primary); margin-bottom: 40px; }
+.logo span { color: var(--emerald-main); }
+
+nav a {
+    display: block;
+    padding: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+nav a.active, nav a:hover {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--emerald-main);
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+    max-width: 1200px;
+}
+
+/* Doctor Profile */
+.doctor-profile-card {
+    background: linear-gradient(135deg, var(--bg-surface), #0d2b2b);
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 30px;
+}
+
+.profile-info { display: flex; align-items: center; gap: 20px; }
+.avatar { font-size: 3rem; background: var(--bg-deep); padding: 15px; border-radius: 50%; }
+
+/* Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: var(--bg-surface);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid var(--border-subtle);
+}
+.name{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: oblique;
+    font-display: block;
+    color: rgb(118, 158, 83);
+}
+
+.specialty{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: oblique;
+    color: rgb(162, 184, 183);
+}
+.contact-links{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: calc();
+    color: #9fb9b9;
+}
+.info-group{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: italic;
+    
+}
+
+.ai-alert-row {
+    background: rgba(245, 158, 11, 0.05); /* Very subtle amber tint */
+}
+
+.ai-alert-row td:first-child {
+    border-left: 4px solid var(--warning-amber);
+}
+
+.stat-val { font-size: 1.8rem; font-weight: 800; color: var(--emerald-main); }
+.stat-label { color: var(--text-muted); font-size: 0.9rem; }
+.danger-border { border-left: 4px solid var(--error-red); }
+
+/* Table */
+.patient-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-surface);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.patient-table th, .patient-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.status-tag {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+
+.status-critical { background: rgba(239, 68, 68, 0.2); color: var(--error-red); }
+.status-stable { background: rgba(16, 185, 129, 0.2); color: var(--emerald-main); }
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--bg-surface);
+    padding: 40px;
+    border-radius: 25px;
+    width: 80%;
+    max-width: 900px;
+    position: relative;
+    border: 1px solid var(--emerald-main);
+}
+
+.modal-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; }
+.highlight-box { background: var(--bg-deep); padding: 15px; border-radius: 12px; margin-top: 15px; }
+.vitals-grid { display: flex; justify-content: space-around; text-align: center; margin-top: 10px; }
+.notes-box { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-style: italic; }
+
+
+
+
+
+
+
+
+/* Ensure this is in your dashboard.css */
+.modal {
+    display: none; /* Change from .hidden class to this for better control */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Darken background */
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px); /* Adds a nice AI-feel blur */
+}
+
+.modal-content {
+    background: var(--bg-surface);
+    border: 1px solid var(--emerald-main);
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    animation: modalSlide 0.4s ease-out;
+}
+
+@keyframes modalSlide {
+    from { transform: translateY(-10%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+
+/* --- Vertical Spacing Fixes --- */
+
+/* 1. Space out the lines of text in the Profile and Medical Info */
+.info-group p {
+    margin-bottom: 15px; /* Adds space between each row */
+    line-height: 1.6;     /* Increases space between the lines of text */
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* 2. Add specific spacing for labels/bold text */
+.info-group strong {
+    min-width: 140px;    /* Keeps labels aligned */
+    display: inline-block;
+    color: var(--emerald-glow); /* Makes the labels pop */
+}
+
+/* 3. Space out the Vital Signs section */
+.vitals-grid {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0;
+}
+
+.v-item span {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 8px; /* Space between "BP" and the actual number */
+}
+
+/* 4. Add padding to the Doctor's Notes box */
+.notes-box {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+    border-left: 3px solid var(--emerald-main);
+    line-height: 1.5;
+}
+
+/* 5. Space out the Headings (Profile, Medical Information, History) */
+.info-group h3 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+/* --- RESPONSIVE LAYOUT ENGINE --- */
+
+/* Main Container Fix */
+.dashboard-body, .patient-body {
+    display: flex;
+    flex-direction: row; /* Default: Side-by-side for Laptops */
+    min-height: 100vh;
+}
+
+/* 1. TABLET VIEW (iPad/Tabs - Max 1024px) */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px; /* Slimmer sidebar */
+    }
+    
+    .stats-grid, .summary-row {
+        grid-template-columns: repeat(2, 1fr); /* 2x2 grid for stats */
+    }
+
+    .dashboard-header-grid {
+        grid-template-columns: 1fr; /* Stack Profile and Doctor cards */
+    }
+}
+
+/* 2. MOBILE VIEW (Phones - Max 768px) */
+@media (max-width: 768px) {
+    /* Stack Sidebar on top of Content */
+    .dashboard-body, .patient-body {
+        flex-direction: column;
+    }
+
+    /* Sidebar transforms into a Top Nav */
+    .sidebar, .sidebar-container {
+        width: 100% !important;
+        height: auto !important;
+        position: relative !important;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 15px;
+    }
+
+    .sidebar-box {
+        height: auto;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+
+    nav a, .nav-btn {
+        padding: 8px;
+        font-size: 0.85rem;
+        margin-bottom: 0;
+    }
+
+    /* Main Content Adjustments */
+    .main-content {
+        padding: 15px;
+    }
+
+    /* Stack All Grids into 1 Column */
+    .stats-grid, .summary-row, .dashboard-header-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Doctor Profile Header */
+    .doctor-profile-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .profile-info {
+        flex-direction: column;
+    }
+
+    /* Detail Rows (Profile text) */
+    .detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        padding: 10px 0;
+    }
+
+    /* Table Responsiveness (Scrollable) */
+    .patient-section {
+        overflow-x: auto; /* Allows table to swipe left/right on phones */
+    }
+
+    .patient-table {
+        min-width: 600px; /* Prevents text from squishing */
+    }
+
+    /* Modal (Popup) Fix */
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .modal-grid {
+        grid-template-columns: 1fr; /* Stack Info and History in Modal */
+    }
+}
+
+
+
+/* --- CRITICAL RESPONSIVE FIXES --- */
+
+/* 1. Fix the Sidebar & Main Content Overlap */
+@media (max-width: 1024px) {
+    .sidebar {
+        position: fixed;
+        left: -280px; /* Fully hide off-screen */
+        width: 260px;
+        height: 100%;
+        z-index: 2000;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.active {
+        transform: translateX(280px); /* Slide into view */
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 80px 15px 20px 15px !important;
+        overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    /* Make the Menu Button visible and attractive */
+    .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 2100;
+        background: #00ff9d;
+        border-radius: 8px;
+        width: 45px;
+        height: 45px;
+        box-shadow: 0 0 15px rgba(0, 255, 157, 0.4);
+    }
+}
+
+/* 2. Fix the Profile Card "Cut-off" (Image 63f397.png) */
+@media (max-width: 768px) {
+    .doctor-profile-card {
+        flex-direction: column;
+        padding: 25px 15px !important;
+        height: auto !important; /* Allow height to grow with content */
+    }
+
+    .profile-info {
+        flex-direction: column;
+        text-align: center;
+    }
+}
