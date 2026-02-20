@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HealthLink AI | Patient Timeline</title>
+    <link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <section id="role-selection" class="fade-in">
+            <header class="hero">
+                <img class="project-logo" src="assets/logo.jpeg" alt="HealthLink AI Logo">
+
+                <h1 class="glow-text">Patient-Centric<span class="accent"> AI Clinical Decision Support System
+                        (CDS)</span></h1>
+                <p>Agentic Intelligence for Patient History & Risk Stratification</p>
+            </header>
+
+            <div class="role-grid">
+                <div class="role-card" onclick="showLogin('patient')">
+                    <div class="icon">👤</div>
+                    <h3>Patient</h3>
+                    <p>View your health journey</p>
+                    <button class="btn">Access Records</button>
+                </div>
+
+                <div class="role-card" onclick="showLogin('doctor')">
+                    <div class="icon">👨‍⚕️</div>
+                    <h3>Doctor</h3>
+                    <p>Analyze clinical trends</p>
+                    <button class="btn">Clinical Portal</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="login-container" class="hidden">
+            <button class="back-link" onclick="showRoles()">← Back to Roles</button>
+
+            <div class="login-box">
+                <h2 id="login-title">Login</h2>
+                <form id="login-form">
+                    <div class="input-group">
+                        <label id="id-label">User ID</label>
+                        <input type="text" id="username" placeholder="Enter your ID" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Sign In</button>
+                </form>
+
+                <p id="register-container" class="hidden" style="margin-top: 20px; text-align: center;">
+                    <span id="register-text">Don't have an account?</span>
+                    <a href="register.html" id="register-link"
+                        style="color: var(--warning-amber); font-weight: bold;">Register here</a>
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

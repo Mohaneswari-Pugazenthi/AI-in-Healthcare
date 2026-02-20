@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Portal | HealthLink AI</title>
+    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="patient-style.css?v=3">
+</head>
+
+<body class="patient-body">
+    <!-- ... -->
+    <script src="patient-app.js?v=3"></script>
+    <div style="position:fixed; bottom:5px; right:5px; opacity:0.3; font-size:10px;">v2.1</div>
+</body>
+
+<aside class="sidebar-container">
+    <div class="sidebar-box">
+        <h2 class="logo">HC<span> AI</span></h2>
+        <nav class="side-nav">
+            <button class="nav-btn active" onclick="switchTab('timeline', this)">My Timeline</button>
+            <button class="nav-btn" onclick="switchTab('reports', this)">Medical Reports</button>
+            <button class="nav-btn" onclick="switchTab('prescriptions', this)">Prescriptions</button>
+            <button class="nav-btn" onclick="switchTab('insights', this)">Medical Insights</button>
+            <button class="nav-btn" onclick="switchTab('chat', this)">AI Assistant</button>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="logout-btn-box" onclick="window.location.href='index.html'">Logout</button>
+        </div>
+    </div>
+</aside>
+
+<main class="main-content">
+
+    <div class="top-row-grid fade-in">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-pic">RK</div> <!-- Initials can be dynamic too -->
+                <div class="profile-info">
+                    <h2 id="p-name">Ravi Kumar</h2>
+                    <p id="p-id">Patient ID: P001</p>
+                </div>
+            </div>
+
+            <div class="profile-details">
+                <div class="detail-row">
+                    <span>Age / Gender</span>
+                    <strong id="p-age-gender">45 / Male</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Blood Group</span>
+                    <strong id="p-blood">O+</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Contact</span>
+                    <strong id="p-contact">+91 99000 11000</strong>
+                </div>
+            </div>
+        </div>
+        <!-- Doctor Section: State 1 (No Doctor) -->
+        <div id="no-doctor-view" class="info-card hidden"
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <h3 style="color: var(--text-muted); margin-bottom: 15px;">No Doctor Assigned</h3>
+            <button class="btn"
+                style="background: var(--bg-deep); border: 1px dashed var(--emerald-main); color: var(--emerald-main);"
+                onclick="openDoctorModal()">
+                + Assign Doctor
+            </button>
+        </div>
+
+        <!-- Doctor Section: State 2 (Doctor Assigned) -->
+        <section id="doctor-details-view" class="info-card hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 class="card-label" style="margin: 0;">Assigned Doctors</h3>
+                <button class="btn-sm" onclick="openDoctorModal()">+ Add</button>
+            </div>
+            <div class="details-list" id="doctors-list">
+                <!-- Dynamic Content -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Doctor Assignment Modal -->
+    <div id="doctor-modal" class="modal hidden" style="display: none;">
+        <div class="modal-content">
+            <h3>Assign Doctor</h3>
+            <div class="input-group">
+                <label>Doctor Name</label>
+                <input type="text" id="edit-doc-name" placeholder="Dr. Smith">
+            </div>
+            <div class="input-group">
+                <label>Specialization</label>
+                <input type="text" id="edit-doc-spec" placeholder="Cardiologist">
+            </div>
+            <div class="input-group">
+                <label>Hospital</label>
+                <input type="text" id="edit-doc-hosp" placeholder="General Hospital">
+            </div>
+            <div class="input-group">
+                <label>Contact</label>
+                <input type="text" id="edit-doc-contact" placeholder="+91...">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" style="flex:1;" onclick="saveDoctorDetails()">Save</button>
+                <button class="btn" style="flex:1; background: #333; border:none;"
+                    onclick="closeDoctorModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary-row fade-in" style="position:relative;">
+        <button class="btn-sm" style="position:absolute; top:-25px; right:0;" onclick="openStatsModal()">Edit
+            Stats</button>
+        <div class="summary-box">
+            <small>Total Visits</small>
+            <p id="total-visits">0</p>
+        </div>
+        <div class="summary-box alert">
+            <small>Major Conditions</small>
+            <p id="major-conditions">-</p>
+        </div>
+        <div class="summary-box">
+            <small>Allergies</small>
+            <p id="allergies">-</p>
+        </div>
+    </div>
+
+    <!-- Stats Edit Modal -->
+    <div id="stats-modal" class="modal hidden" style="display: none;">
+        <div class="modal-content">
+            <h3>Update Health Stats</h3>
+            <div class="input-group">
+                <label>Major Conditions</label>
+                <input type="text" id="edit-conditions" placeholder="e.g. Hypertension, Diabetes">
+            </div>
+            <div class="input-group">
+                <label>Allergies</label>
+                <input type="text" id="edit-allergies" placeholder="e.g. Peanuts, Penicillin">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" style="flex:1;" onclick="saveStats()">Save</button>
+                <button class="btn" style="flex:1; background: #333; border:none;"
+                    onclick="closeStatsModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-view-container fade-in">
+        <section id="timeline-view" class="tab-content active">
+            <h2 class="section-title">Health Timeline</h2>
+            <div id="health-timeline" class="content-list"></div>
+        </section>
+
+        <section id="reports-view" class="tab-content">
+            <h2 class="section-title">Medical Reports</h2>
+            <div class="upload-box"
+                style="margin-bottom: 20px; padding: 20px; border: 2px dashed #ccc; text-align: center;">
+                <h3>Upload New Report</h3>
+                <input type="file" id="pdf-upload" accept=".pdf">
+                <button class="btn" onclick="uploadReport()">Upload & Analyze</button>
+                <p id="upload-status"></p>
+            </div>
+            <div id="reports-list" class="reports-grid"></div>
+        </section>
+
+        <section id="chat-view" class="tab-content">
+            <h2 class="section-title">Health Assistant</h2>
+            <div class="chat-container" style="max-width: 600px; margin: 0 auto;">
+                <div id="chat-history">
+                    <div class="chat-msg system">Ask me about your health data (e.g., "What was my last BP?").</div>
+                </div>
+                <div class="chat-input" style="display: flex;">
+                    <input type="text" id="chat-query" placeholder="Type your question..."
+                        style="flex: 1; padding: 10px;">
+                    <button class="btn" onclick="sendChat()">Send</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="prescriptions-view" class="tab-content">
+            <h2 class="section-title">Prescriptions</h2>
+            <div id="prescriptions-list" class="content-list"></div>
+        </section>
+
+        <section id="insights-view" class="tab-content">
+            <h2 class="section-title">Medical Insights</h2>
+            <div class="info-card" style="margin-bottom: 20px;">
+                <h3>AI Health Summary</h3>
+                <p id="insight-summary" style="line-height: 1.6; color: var(--text-muted);">Loading insights...</p>
+                <div style="margin-top: 20px; display: flex; gap: 20px;">
+                    <div>
+                        <small>Trend Analysis</small>
+                        <h4 id="insight-trend" style="color: var(--emerald-glow);">--</h4>
+                    </div>
+                    <div>
+                        <small>Risk Factor</small>
+                        <h4 id="insight-risk" style="color: var(--warning-amber);">--</h4>
+                    </div>
+                </div>
+                <button class="btn" style="margin-top: 20px;" onclick="downloadInsights()">Download Report</button>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script src="patient-app.js?v=2"></script>
+</body>
+
+</html>

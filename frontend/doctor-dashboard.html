@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard | HealthLink AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="sidebar">
+        <h2 class="logo">CDS<span>AI</span></h2>
+        <nav>
+            <a href="#" class="nav-link active" onclick="switchTab('dashboard', this)">Dashboard</a>
+            <a href="#" class="nav-link" onclick="switchTab('reports', this)">Reports</a>
+        </nav>
+        <button class="logout-btn" onclick="location.href='index.html'">Logout</button>
+    </div>
+
+    <main class="main-content">
+        <div id="dashboard-view" class="tab-view">
+            <header class="doctor-profile-card fade-in">
+                <div class="profile-info">
+                    <div class="avatar"></div>
+                    <div>
+                        <h1 class="name" id="doc-name">Dr. Arjun Kumar</h1>
+                        <p class="specialty" id="doc-spec">Cardiologist • 12 Years Experience</p>
+                        <div class="contact-links">
+                            <span id="doc-email">Email : arjun.k@gmail.com</span> | <span id="doc-phone">Phone no : +91
+                                98765 43210</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="badge">Chief Consultant</div>
+            </header>
+
+            <section class="stats-grid fade-in">
+                <div class="stat-card">
+                    <span class="stat-icon">👥</span>
+                    <div class="stat-val" id="total-patients">0</div>
+                    <div class="stat-label">Total Patients</div>
+                </div>
+                <div class="stat-card accent-border">
+                    <span class="stat-icon"></span>
+                    <div class="stat-val" id="today-appts">0</div>
+                    <div class="stat-label">Today's Appointments</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon"></span>
+                    <div class="stat-val" id="pending-reports">0</div>
+                    <div class="stat-label">Pending Reports</div>
+                </div>
+                <div class="stat-card danger-border">
+                    <span class="stat-icon"></span>
+                    <div class="stat-val" id="emergency-cases">0</div>
+                    <div class="stat-label">Emergency Cases</div>
+                </div>
+            </section>
+
+            <section class="patient-section fade-in">
+                <div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2>Active Patients</h2>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" placeholder="Enter Patient ID (e.g., tamil@34)" id="newPatientId"
+                            style="padding:10px; border-radius:8px; border:1px solid #333; background:#040d0d; color:#fff;">
+                        <button class="btn" onclick="addPatient()">+ Add Patient</button>
+                    </div>
+                </div>
+                <table class="patient-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Condition</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientList">
+                        <!-- Dynamic Content -->
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+        <div id="reports-view" class="tab-view" style="display:none;">
+            <div class="section-header">
+                <h2>Pending Medical Reports</h2>
+            </div>
+            <div class="info-card" style="text-align:center; padding:50px; color:#666;">
+                <p>No new reports to review.</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="patientModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="modal-grid">
+                <div class="modal-left">
+                    <h2 id="m-name">Suriya</h2>
+                    <p id="m-id" class="text-dim">ID: P000</p>
+
+                    <div class="info-group">
+                        <p class="age"><strong>Age / Gender:</strong> <span id="m-age-gen"></span></p>
+                        <p class="group"><strong>Blood Group:</strong> <span id="m-blood"></span></p>
+                        <p class="emergency"><strong>Emergency:</strong> <span id="m-emergency"></span></p>
+                    </div>
+
+                    <div class="info-group highlight-box">
+                        <h3>Vital Signs</h3>
+                        <div class="vitals-grid">
+                            <div class="v-item"><span>BP</span><br><b id="m-bp">--</b></div>
+                            <div class="v-item"><span>Heart</span><br><b id="m-hr">--</b></div>
+                            <div class="v-item"><span>Sugar</span><br><b id="m-sugar">--</b></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-right">
+                    <div class="info-group">
+                        <h3>Medical Information</h3>
+                        <p><strong>Diagnosis:</strong> <span id="m-diag"></span></p>
+                        <p><strong>Symptoms:</strong> <span id="m-symp" class="tag"></span></p>
+                        <p><strong>Treatment:</strong> <span id="m-plan"></span></p>
+                    </div>
+
+                    <div class="info-group">
+                        <h3>History</h3>
+                        <p><strong>Last Visit:</strong> <span id="m-last"></span></p>
+                        <p><strong>Next Appt:</strong> <span id="m-next"></span></p>
+                        <p><strong>Doctor's Notes:</strong>
+                        <p id="m-notes" class="notes-box"></p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="doctor-app.js?v=5"></script>
+</body>
+
+</html>

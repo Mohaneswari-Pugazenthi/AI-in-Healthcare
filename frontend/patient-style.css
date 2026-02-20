@@ -1,0 +1,294 @@
+/* Layout Reset */
+.patient-body {
+    display: flex;
+    align-items: stretch;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #051414; /* Deep Green from your images */
+    color: #f0fdf4;
+}
+
+/* Sidebar Fix: Top to Bottom */
+.sidebar-container {
+    width: 300px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar-box {
+    background: #0a2222;
+    height: 100%;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #134e4a;
+}
+
+.side-nav { flex: 1; margin-top: 30px; }
+
+.nav-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    text-align: left;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.nav-btn.active, .nav-btn:hover {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.logout-btn-box {
+    width: 100%;
+    padding: 12px;
+    background: #1a2e2e;
+    color: #ef4444;
+    border: 1px solid #3d1c1c;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Main Content Grid */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    max-width: 1200px;
+}
+
+.top-row-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal boxes */
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.info-card {
+    background: #0a2222;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #134e4a;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Summary Bar */
+.summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.summary-box {
+    background: #0a2222;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid #134e4a;
+}
+
+/* Tab Logic */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.timeline-item {
+    background: #0a2222;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border-left: 5px solid #10b981;
+}
+
+/* --- GLOBAL RESPONSIVE LAYOUT --- */
+.patient-body {
+    display: flex;
+    flex-direction: row; /* Default for Laptops */
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--bg-deep);
+}
+
+/* SIDEBAR: Flexible for all screens */
+.sidebar-container {
+    width: 280px; /* Laptop width */
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding: 20px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar-box {
+    background: var(--bg-surface);
+    height: 100%;
+    border-radius: 20px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-subtle);
+}
+
+/* MAIN CONTENT: Flexible */
+.main-content {
+    flex: 1;
+    padding: 30px;
+    max-width: 100%;
+}
+
+/* --- GRID SYSTEM: Responsive --- */
+.dashboard-header-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 Columns for Laptop */
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 Columns for Laptop */
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* Profile Card Styling */
+.profile-card {
+    background: var(--bg-surface);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 20px;
+}
+
+.profile-pic {
+    width: 60px;
+    height: 60px;
+    background: var(--emerald-main);
+    color: var(--bg-deep);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.profile-info h2 {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+}
+
+.profile-info p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+}
+
+.detail-row span {
+    color: var(--text-muted);
+}
+
+/* --- MEDIA QUERY: TABLETS (Max 1024px) --- */
+@media (max-width: 1024px) {
+    .sidebar-container {
+        width: 220px;
+    }
+    .dashboard-header-grid {
+        grid-template-columns: 1fr; /* Stack Profile & Doctor */
+    }
+}
+
+/* --- MEDIA QUERY: MOBILE PHONES (Max 768px) --- */
+@media (max-width: 768px) {
+    .patient-body {
+        flex-direction: column; /* Stack Sidebar on Top of Content */
+    }
+
+    .sidebar-container {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 10px;
+    }
+
+    .sidebar-box {
+        flex-direction: row; /* Horizontal menu for Mobile */
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+    }
+
+    .side-nav {
+        display: flex;
+        flex-direction: row; /* Horizontal Buttons */
+        gap: 5px;
+        margin-top: 0;
+    }
+
+    .nav-btn {
+        padding: 8px;
+        font-size: 0.8rem;
+        margin-bottom: 0;
+    }
+
+    .sidebar-footer {
+        display: none; /* Hide logout in main nav, move to content if needed */
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .summary-row {
+        grid-template-columns: 1fr; /* Stack Stats vertically */
+    }
+
+    .detail-row {
+        flex-direction: column; /* Stack Label and Value */
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .timeline-item {
+        padding: 20px;
+    }
+}
